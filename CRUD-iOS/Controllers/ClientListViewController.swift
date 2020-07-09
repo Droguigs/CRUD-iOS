@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NewClientDelegate {
-    func addClient(callback: @escaping () -> Bool)
+    func addClient()
 }
 
 class ClientListViewController: UIViewController {
@@ -34,6 +34,7 @@ class ClientListViewController: UIViewController {
     
     func loadData() {
         clientList = cache.allClients()
+        clientList = clientList.sorted(by: { $0.name < $1.name })
         if clientList.isEmpty {
             self.noClientView.isHidden = false
         } else {
@@ -53,15 +54,12 @@ class ClientListViewController: UIViewController {
         
     }
     
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let destinationVC = segue.destination as? SignUpViewController
+        destinationVC?.delegate = self
     }
-    */
 
 }
 
@@ -79,7 +77,7 @@ extension ClientListViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ClientViewControllerCell
             
-            cell.name.text = getUserTableName(client: clientList[indexPath.row])
+            cell.name.text = getUserTableName(client: clientList[indexPath.row-1])
 
             return cell
         }
@@ -89,8 +87,28 @@ extension ClientListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ClientListViewController: NewClientDelegate {
     
-    func addClient(callback: @escaping () -> Bool) {
+    func addClient() {
+        showToast(message: "Cliente cadastrado com sucesso", font: .systemFont(ofSize: 15), color: .systemGreen)
         loadData()
+    }
+    
+    func showToast(message : String, font: UIFont, color: UIColor) {
+
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 175, y: self.view.frame.size.height-100, width: 350, height: 35))
+        toastLabel.backgroundColor = color.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = font
+        toastLabel.textAlignment = .center;
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 8.0, delay: 0.1, options: .curveEaseOut, animations: {
+             toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
     }
     
 }

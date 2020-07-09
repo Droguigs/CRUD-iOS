@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     
     let cache = ClientCache()
+    var delegate: NewClientDelegate?
     
     let datePicker = UIDatePicker()
     let genderPicker = UIPickerView()
@@ -134,10 +135,10 @@ class SignUpViewController: UIViewController {
                                         cpf: cpf,
                                         birthDate: birthday,
                                         gender: gender,
-                                        tableText: name + "- \(age)")
+                                        tableText: name + " - \(age)")
                     self.cache.add(client: client)
-                    
-                    showToast(message: "Cliente cadastrado com sucesso", font: .systemFont(ofSize: 15), color: .systemGreen)
+                    dismiss(animated: true) { }
+                    delegate?.addClient()
                 } else {
                     showToast(message: "Cliente ja cadastrado", font: .systemFont(ofSize: 15), color: .systemRed)
                 }

@@ -141,49 +141,79 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCell" id="GQb-C2-etL" customClass="SearchViewControllerCell" customModule="CRUD_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="72.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="52.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GQb-C2-etL" id="OHu-Ke-Sv0">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="72.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="52.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tM9-hk-OUZ">
-                                                    <rect key="frame" x="8" y="8" width="398" height="56.5"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                                                </searchBar>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Buscar CPF" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Twe-ES-MfA">
+                                                    <rect key="frame" x="20" y="4" width="374" height="44.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="Nc1-eH-SfR"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search"/>
+                                                </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="tM9-hk-OUZ" secondAttribute="trailing" constant="8" id="UsK-HK-vzv"/>
-                                                <constraint firstItem="tM9-hk-OUZ" firstAttribute="centerY" secondItem="OHu-Ke-Sv0" secondAttribute="centerY" id="hmg-zl-7hO"/>
-                                                <constraint firstItem="tM9-hk-OUZ" firstAttribute="centerX" secondItem="OHu-Ke-Sv0" secondAttribute="centerX" id="jUy-eW-gsN"/>
-                                                <constraint firstAttribute="bottom" secondItem="tM9-hk-OUZ" secondAttribute="bottom" constant="8" id="qgS-V0-Oia"/>
-                                                <constraint firstItem="tM9-hk-OUZ" firstAttribute="leading" secondItem="OHu-Ke-Sv0" secondAttribute="leading" constant="8" id="vOi-bL-IW2"/>
-                                                <constraint firstItem="tM9-hk-OUZ" firstAttribute="top" secondItem="OHu-Ke-Sv0" secondAttribute="top" constant="8" id="ycc-hQ-I6s"/>
+                                                <constraint firstAttribute="bottom" secondItem="Twe-ES-MfA" secondAttribute="bottom" constant="4" id="cma-fO-cNA"/>
+                                                <constraint firstItem="Twe-ES-MfA" firstAttribute="top" secondItem="OHu-Ke-Sv0" secondAttribute="top" constant="4" id="dxi-0d-z4F"/>
+                                                <constraint firstAttribute="trailing" secondItem="Twe-ES-MfA" secondAttribute="trailing" constant="20" id="hwi-eT-UmD"/>
+                                                <constraint firstItem="Twe-ES-MfA" firstAttribute="leading" secondItem="OHu-Ke-Sv0" secondAttribute="leading" constant="20" id="tiB-zD-8vC"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="textSearchBar" destination="Twe-ES-MfA" id="Lcy-4u-Hp2"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClientCell" id="YI2-GG-3jI" customClass="ClientViewControllerCell" customModule="CRUD_iOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="80.5" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YI2-GG-3jI" id="61Q-5f-BeZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zri-x9-DmK">
-                                                    <rect key="frame" x="40" y="22" width="334" height="0.0"/>
+                                                    <rect key="frame" x="40" y="22" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xg7-XH-KA6">
+                                                    <rect key="frame" x="366" y="4" width="36" height="36.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="pRr-Sh-d3I"/>
+                                                        <constraint firstAttribute="height" constant="36" id="pUa-DQ-pvi"/>
+                                                    </constraints>
+                                                    <state key="normal" image="delete"/>
+                                                    <connections>
+                                                        <action selector="deleteClient:" destination="YI2-GG-3jI" eventType="touchUpInside" id="4VO-IV-qmO"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXH-tJ-4bG">
+                                                    <rect key="frame" x="324" y="4" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="fXx-ZC-RuL"/>
+                                                        <constraint firstAttribute="height" constant="36" id="xjS-Uy-zWq"/>
+                                                    </constraints>
+                                                    <state key="normal" image="edit"/>
+                                                    <connections>
+                                                        <action selector="editClient:" destination="YI2-GG-3jI" eventType="touchUpInside" id="vgy-DX-3g4"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="xg7-XH-KA6" secondAttribute="bottom" constant="3.5" id="A37-rH-XLm"/>
+                                                <constraint firstAttribute="trailing" secondItem="xg7-XH-KA6" secondAttribute="trailing" constant="12" id="Grz-Ng-InX"/>
                                                 <constraint firstItem="Zri-x9-DmK" firstAttribute="leading" secondItem="61Q-5f-BeZ" secondAttribute="leadingMargin" constant="20" id="IUO-EH-Spu"/>
+                                                <constraint firstItem="xg7-XH-KA6" firstAttribute="top" secondItem="61Q-5f-BeZ" secondAttribute="top" constant="4" id="cnD-3c-HZs"/>
                                                 <constraint firstItem="Zri-x9-DmK" firstAttribute="centerY" secondItem="61Q-5f-BeZ" secondAttribute="centerY" id="kWz-aN-qfA"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Zri-x9-DmK" secondAttribute="trailing" constant="20" id="yD6-Nq-oAx"/>
+                                                <constraint firstItem="iXH-tJ-4bG" firstAttribute="top" secondItem="61Q-5f-BeZ" secondAttribute="top" constant="4" id="zAG-kV-5Rm"/>
+                                                <constraint firstItem="xg7-XH-KA6" firstAttribute="leading" secondItem="iXH-tJ-4bG" secondAttribute="trailing" constant="6" id="zAd-KW-HXX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -575,6 +605,8 @@
     </scenes>
     <resources>
         <image name="app-bg" width="2000" height="1247"/>
+        <image name="delete" width="48" height="48"/>
+        <image name="edit" width="48" height="48"/>
         <image name="plus" width="32" height="32"/>
     </resources>
 </document>

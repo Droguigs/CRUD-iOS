@@ -28,6 +28,15 @@ class ClientCache: ClientCacheType {
         } catch { }
     }
     
+    func allClients() -> [Client] {
+        var clients: [Client] = []
+        let objects = self.realm.objects(ClientRealm.self)
+        objects.forEach { client in
+            clients.append(self.fromRealm(client: client))
+        }
+        return clients
+    }
+    
     func allClients(cpf: String) -> [Client] {
         var clients: [Client] = []
         let objects = self.realm.objects(ClientRealm.self).filter("cpf == %@", cpf)

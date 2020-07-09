@@ -12,6 +12,7 @@ import UIKit
 protocol ClientCacheType {
     
     func add(client: Client)
+    func allClients() -> [Client]
     func allClients(cpf: String) -> [Client]
     
 }

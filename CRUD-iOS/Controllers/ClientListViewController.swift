@@ -17,6 +17,7 @@ class ClientListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noClientView: UIView!
     var clientList: [Client] = []
+    let cache = ClientCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +30,14 @@ class ClientListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         noClientView.isHidden = true
         loadData()
-        self.tableView.reloadData()
     }
     
     func loadData() {
+        clientList = cache.allClients()
         if clientList.isEmpty {
             self.noClientView.isHidden = false
+        } else {
+            self.tableView.reloadData()
         }
     }
     
@@ -87,7 +90,7 @@ extension ClientListViewController: UITableViewDelegate, UITableViewDataSource {
 extension ClientListViewController: NewClientDelegate {
     
     func addClient(callback: @escaping () -> Bool) {
-        <#code#>
+        loadData()
     }
     
 }

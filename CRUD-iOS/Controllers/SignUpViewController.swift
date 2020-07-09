@@ -22,7 +22,7 @@ class SignUpViewController: UIViewController {
     let datePicker = UIDatePicker()
     let genderPicker = UIPickerView()
     
-    let genderPickerData = ["Masculino", "Feminino", "Outro"]
+    let genderPickerData = ["", "Masculino", "Feminino"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +40,12 @@ class SignUpViewController: UIViewController {
     }
     
     func configurePickers() {
+        
         datePicker.locale = .init(identifier: "pt_BR")
         datePicker.datePickerMode = .date
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneDatePicker));
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
 
@@ -52,13 +53,19 @@ class SignUpViewController: UIViewController {
         birthDate.inputAccessoryView = toolbar
         birthDate.inputView = datePicker
         
+        let defaultToolbar = UIToolbar()
+        defaultToolbar.sizeToFit()
+        let defaultDoneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(done));
+
+        defaultToolbar.setItems([cancelButton,spaceButton,defaultDoneButton], animated: false)
+        
         genderPicker.delegate = self
-        gender.inputAccessoryView = toolbar
+        gender.inputAccessoryView = defaultToolbar
         gender.inputView = genderPicker
         
-        cpf.inputAccessoryView = toolbar
-        telephone.inputAccessoryView = toolbar
-        name.inputAccessoryView = toolbar
+        cpf.inputAccessoryView = defaultToolbar
+        telephone.inputAccessoryView = defaultToolbar
+        name.inputAccessoryView = defaultToolbar
     }
     
     deinit {
@@ -164,10 +171,14 @@ class SignUpViewController: UIViewController {
         }
     }
 
-    @objc func donedatePicker(){
+    @objc func doneDatePicker(){
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         birthDate.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+    }
+    
+    @objc func done(){
         self.view.endEditing(true)
     }
 

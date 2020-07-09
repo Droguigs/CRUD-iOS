@@ -46,6 +46,29 @@ class ClientCache: ClientCacheType {
         return clients
     }
     
+    func deleteClient(client: Client) {
+        let objects = self.realm.objects(ClientRealm.self).filter("cpf == %@", client.cpf)
+        objects.forEach { client in
+            do {
+                try self.realm.write {
+                    self.realm.delete(client)
+                }
+            } catch { }
+        }
+    }
+    
+    func editClient(client: Client) {
+        let objects = self.realm.objects(ClientRealm.self).filter("cpf == %@", client.cpf)
+        objects.forEach { obj in
+            do {
+                try self.realm.write {
+                    self.realm.delete(obj)
+                }
+            } catch { }
+        }
+        self.add(client: client)
+    }
+    
     private func toRealm(clients: [Client]) -> [ClientRealm] {
         var cli: [ClientRealm] = []
         for old in clients {

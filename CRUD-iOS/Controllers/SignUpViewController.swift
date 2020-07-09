@@ -20,6 +20,8 @@ class SignUpViewController: UIViewController {
     let cache = ClientCache()
     var delegate: NewClientDelegate?
     
+    var client: Client?
+    
     let datePicker = UIDatePicker()
     let genderPicker = UIPickerView()
     
@@ -27,8 +29,20 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureData()
         configurePickers()
         setupGestureAndKeyboard()
+    }
+    
+    func configureData() {
+        
+        name.text = client?.name
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        birthDate.text = formatter.string(from: client?.birthDate ?? Date())
+        gender.text = client?.gender
+        telephone.text = client?.telephone
+        cpf.text = client?.cpf
     }
     
     func setupGestureAndKeyboard() {
@@ -140,7 +154,26 @@ class SignUpViewController: UIViewController {
                     dismiss(animated: true) { }
                     delegate?.addClient()
                 } else {
-                    showToast(message: "Cliente ja cadastrado", font: .systemFont(ofSize: 15), color: .systemRed)
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "dd/MM/yyyy"
+                    let birthDate = formatter.date(from: date)
+                    
+                    let now = Date()
+                    let birthday: Date = birthDate ?? Date()
+                    let calendar = Calendar.current
+
+                    let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
+                    let age = ageComponents.year!
+                    
+                    let client = Client(name: name,
+                                        telephone: tel,
+                                        cpf: cpf,
+                                        birthDate: birthday,
+                                        gender: gender,
+                                        tableText: name + " - \(age)")
+                    self.cache.editClient(client: client)
+                    dismiss(animated: true) { }
+                    delegate?.addClient()
                 }
             } else {
                 showToast(message: "Favor preencher todos os campos", font: .systemFont(ofSize: 15), color: .systemRed)

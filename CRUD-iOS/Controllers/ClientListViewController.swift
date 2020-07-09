@@ -13,8 +13,8 @@ protocol NewClientDelegate {
 }
 
 protocol ClientDelegate {
-    func editClient(row: Int)
-    func deleteClient(row: Int)
+    func editClient(client: Client)
+    func deleteClient(client: Client)
 }
 
 class ClientListViewController: UIViewController {
@@ -24,6 +24,7 @@ class ClientListViewController: UIViewController {
     
     var filterredClients: [Client] = []
     let cache = ClientCache()
+    var selectedClient: Client?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class ClientListViewController: UIViewController {
         if filterredClients.isEmpty {
             self.noClientView.isHidden = false
         } else {
+            self.noClientView.isHidden = true
             self.tableView.reloadData()
         }
     }
@@ -65,6 +67,7 @@ class ClientListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as? SignUpViewController
         destinationVC?.delegate = self
+        destinationVC?.client = selectedClient
     }
 
 }
@@ -84,7 +87,8 @@ extension ClientListViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ClientCell", for: indexPath) as! ClientViewControllerCell
-            
+            cell.delegate = self
+            cell.client = filterredClients[indexPath.row-1]
             cell.name.text = getUserTableName(client: filterredClients[indexPath.row-1])
 
             return cell
@@ -97,6 +101,7 @@ extension ClientListViewController: NewClientDelegate, ClientDelegate {
     
     func addClient() {
         showToast(message: "Cliente cadastrado com sucesso", font: .systemFont(ofSize: 15), color: .systemGreen)
+        self.selectedClient = nil
         loadData()
     }
     
@@ -119,12 +124,26 @@ extension ClientListViewController: NewClientDelegate, ClientDelegate {
         })
     }
     
-    func editClient(row: Int) {
-        <#code#>
+    func editClient(client: Client) {
+        selectedClient = client
+        self.performSegue(withIdentifier: "NewUser", sender: self)
     }
     
-    func deleteClient(row: Int) {
-        <#code#>
+    func deleteClient(client: Client) {
+        cache.deleteClient(client: client)
+        var flag = (0,false)
+        var i = 0
+        for cli in filterredClients {
+            if cli.cpf == client.cpf {
+                flag = (i,true)
+            }
+            i+=1
+        }
+        self.filterredClients.remove(at: flag.0)
+        if filterredClients.count == 0 {
+            self.noClientView.isHidden = false
+        }
+        self.tableView.reloadData()
     }
     
 }
@@ -159,13 +178,16 @@ class SearchViewControllerCell: UITableViewCell {
 
 class ClientViewControllerCell: UITableViewCell {
     
+    var delegate: ClientDelegate?
+    var client: Client = Client(name: "", telephone: "", cpf: "", birthDate: Date(), gender: "", tableText: "" )
+    
     @IBOutlet weak var name: UILabel!
     
     @IBAction func editClient(_ sender: Any) {
-        
+        delegate?.editClient(client: client)
     }
     
     @IBAction func deleteClient(_ sender: Any) {
-        
+        delegate?.deleteClient(client: client)
     }
 }

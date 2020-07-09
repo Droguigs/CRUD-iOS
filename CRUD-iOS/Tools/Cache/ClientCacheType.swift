@@ -14,5 +14,7 @@ protocol ClientCacheType {
     func add(client: Client)
     func allClients() -> [Client]
     func allClients(cpf: String) -> [Client]
+    func deleteClient(client: Client)
+    func editClient(client: Client)
     
 }
